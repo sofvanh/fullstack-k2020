@@ -21,16 +21,17 @@ const Statistics = (props) => {
   const good = props.good
   const neutral = props.neutral
   const bad = props.bad
-  const average = (good - bad) / (good + neutral + bad)
-  const positive = good / (good + neutral + bad) * 100
+  const all = good + neutral + bad
+  const average = (good - bad) / all
+  const positive = good / all * 100
 
-  if (good + neutral + bad === 0) return (
+  if (all === 0) return (
     <div>
       <h2>Statistics</h2>
       <p>No feedback given</p>
     </div>
   )
-  // TODO missing all
+  
   return (
     <div>
       <h2>Statistics</h2>
@@ -39,6 +40,7 @@ const Statistics = (props) => {
           <StatisticLine title="Good" value={good} />
           <StatisticLine title="Neutral" value={neutral} />
           <StatisticLine title="Bad" value={bad} />
+          <StatisticLine title="All" value={all} />
           <StatisticLine title="Average" value={average} />
           <StatisticLine title="Positive" value={positive} />
         </tbody>
