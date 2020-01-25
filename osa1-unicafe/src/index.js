@@ -8,8 +8,12 @@ const Button = (props) => {
 }
 
 const StatisticLine = (props) => {
+  // TODO percentage mark for positive
   return (
-    <p>{props.title}: {props.value}</p>
+    <tr>
+      <td>{props.title}</td>
+      <td>{props.value}</td>
+    </tr>
   )
 }
 
@@ -26,15 +30,19 @@ const Statistics = (props) => {
       <p>No feedback given</p>
     </div>
   )
-
+  // TODO missing all
   return (
     <div>
       <h2>Statistics</h2>
-      <StatisticLine title="Good" value={good}/>
-      <StatisticLine title="Neutral" value={neutral}/>
-      <StatisticLine title="Bad" value={bad}/>
-      <StatisticLine title="Average" value={average}/>
-      <StatisticLine title="Positive" value={positive}/>
+      <table>
+        <tbody>
+          <StatisticLine title="Good" value={good} />
+          <StatisticLine title="Neutral" value={neutral} />
+          <StatisticLine title="Bad" value={bad} />
+          <StatisticLine title="Average" value={average} />
+          <StatisticLine title="Positive" value={positive} />
+        </tbody>
+      </table>
     </div>
   )
 }
