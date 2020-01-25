@@ -8,7 +8,6 @@ const Button = (props) => {
 }
 
 const StatisticLine = (props) => {
-  // TODO percentage mark for positive
   return (
     <tr>
       <td>{props.title}</td>
@@ -23,7 +22,7 @@ const Statistics = (props) => {
   const bad = props.bad
   const all = good + neutral + bad
   const average = (good - bad) / all
-  const positive = good / all * 100
+  const positive = good / all * 100 + "%"
 
   if (all === 0) return (
     <div>
