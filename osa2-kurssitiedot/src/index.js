@@ -2,14 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Course from './components/Course'
 
-const Total = (props) => {
-  return (
-    <div>
-      <p>Number of exercises {props.parts.reduce((a, b) => a.exercises + b.exercises, 0)}</p>
-    </div>
-  )
-}
-
 const App = () => {
   const course = {
     name: 'Half Stack application development',
