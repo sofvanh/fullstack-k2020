@@ -8,6 +8,13 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
+
+    if (persons.some(p => p.name.localeCompare(newName) === 0
+    )) {
+      window.alert(`${newName} is already in the phone book!`)
+      return;
+    }
+
     const personObject = {
       name: newName,
     }
@@ -35,7 +42,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map((person) => 
+        {persons.map((person) =>
           <p key={person.name}>{person.name}</p>
         )}
       </ul>
