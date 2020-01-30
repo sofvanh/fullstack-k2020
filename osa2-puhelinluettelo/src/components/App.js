@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PersonList from './PersonList'
 import AddForm from './AddForm'
 import Search from './Search'
+import Axios from 'axios'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -13,6 +14,14 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  
+  useEffect(() => {
+    Axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
+  }, [])
 
   const addPerson = (event) => {
     event.preventDefault()
