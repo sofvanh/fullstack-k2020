@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import PersonList from './PersonList'
-import AddForm from './AddForm'
-import Search from './Search'
+import PersonList from './components/PersonList'
+import AddForm from './components/AddForm'
+import Search from './components/Search'
 import Axios from 'axios'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -14,7 +15,7 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  
+
   useEffect(() => {
     Axios
       .get('http://localhost:3001/persons')
@@ -37,9 +38,13 @@ const App = () => {
       number: newNumber,
     }
 
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
+    personService
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(personObject))
+        setNewName('')
+        setNewNumber('')
+      })
   }
 
   const handleNameChange = (event) => {
