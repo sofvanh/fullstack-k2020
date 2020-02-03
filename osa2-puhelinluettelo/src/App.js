@@ -51,6 +51,18 @@ const App = () => {
     setSearchTerm(event.target.value)
   }
 
+  const handleDelete = id => {
+    if (window.confirm("Are you sure?")) {
+      personService
+        .remove(id)
+        .then(() => {
+          personService
+            .getAll()
+            .then(persons => setPersons(persons))
+        })
+    }
+  }
+
   const foundPersons = persons.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
   return (
@@ -66,7 +78,7 @@ const App = () => {
         newNumber={newNumber}
         handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
-      <PersonList persons={foundPersons} />
+      <PersonList persons={foundPersons} deleteAction={handleDelete} />
     </div>
   )
 }
