@@ -1,7 +1,7 @@
 import React from 'react'
 import SingleCountry from './SingleCountry'
 
-const BaseCountry = ({ countries }) => {
+const BaseCountry = ({ countries, onShow }) => {
     if (countries.length >= 10) {
         return (
             <p>Too many matches, specify another filter</p>
@@ -9,8 +9,10 @@ const BaseCountry = ({ countries }) => {
     } else if (countries.length > 1) {
         return (
             <div>
-                {countries.map((country) => 
-                    <p key={country.name}>{country.name}</p>
+                {countries.map((country) =>
+                    <p key={country.name}>
+                        {country.name} <button onClick={() => onShow(country.name)}>show</button>
+                    </p>
                 )}
             </div>
         )

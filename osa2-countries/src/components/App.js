@@ -20,10 +20,14 @@ const App = () => {
     setSearchTerm(event.target.value)
   }
 
+  const onShow = name => {
+    setSearchTerm(name)
+  }
+
   return (
     <div>
       find countries <input value={searchTerm} onChange={handleSearchChange} />
-      <BaseCountry countries={countries} />
+      <BaseCountry countries={countries} onShow={onShow} />
     </div>
   )
 }
