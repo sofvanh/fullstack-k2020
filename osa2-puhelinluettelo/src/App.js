@@ -3,12 +3,14 @@ import PersonList from './components/PersonList'
 import AddForm from './components/AddForm'
 import Search from './components/Search'
 import personService from './services/persons'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
     personService
@@ -36,6 +38,12 @@ const App = () => {
         setPersons(persons.concat(personObject))
         setNewName('')
         setNewNumber('')
+        setMessage(
+          `Added ${personObject.name}!`
+        )
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
       })
   }
 
@@ -59,6 +67,12 @@ const App = () => {
           personService
             .getAll()
             .then(persons => setPersons(persons))
+          setMessage(
+            `Person removed!`
+          )
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
         })
     }
   }
@@ -68,6 +82,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification message={message} />
       <h2>Search</h2>
       <Search searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
       <h2>Add a new person</h2>
