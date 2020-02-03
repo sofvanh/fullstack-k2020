@@ -10,7 +10,7 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -21,9 +21,26 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
 
-    if (persons.some(p => p.name.localeCompare(newName) === 0
-    )) {
-      window.alert(`${newName} is already in the phone book!`)
+    const existing = persons.filter(p => p.name.localeCompare(newName) === 0)
+    if (existing.length > 0) {
+      const person = existing[0]
+      const id = person.id
+      const changedPerson = { ...person, number: newNumber }
+      if (window.confirm(`${person.name} is already in the phonebook, replace the old number with a new one?`)) {
+        personService
+          .update(id, changedPerson)
+          .then(returnedPerson => {
+            setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
+          })
+          .catch(error => {
+            alert(
+              `Person ${person.name} was already deleted from server`
+            )
+            setPersons(persons.filter(p => p.id !== id))
+          })
+      } else {
+        window.alert(`${newName} is already in the phone book!`)
+      }
       return;
     }
 
