@@ -2,26 +2,18 @@ import React, { useState, useEffect } from 'react'
 import PersonList from './components/PersonList'
 import AddForm from './components/AddForm'
 import Search from './components/Search'
-import Axios from 'axios'
 import personService from './services/persons'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    {
-      name: 'Arto Hellas',
-      number: '040-1231244'
-    }
-  ])
+  const [persons, setPersons] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
 
   useEffect(() => {
-    Axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
+    personService
+      .getAll()
+      .then(persons => setPersons(persons))
   }, [])
 
   const addPerson = (event) => {
