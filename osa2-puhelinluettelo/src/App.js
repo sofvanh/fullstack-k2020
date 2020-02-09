@@ -67,9 +67,12 @@ const App = () => {
           setMessage(null)
         }, 5000)
       })
-      .catch(error => {
-        setError(error.response.data)
+      .catch(err => {
+        setError(`Error encountered: ${err.response.data.error}`)
       })
+      setTimeout(() => {
+        setError(null)
+      }, 5000)
   }
 
   const handleNameChange = (event) => {
