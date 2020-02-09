@@ -33,15 +33,15 @@ const App = () => {
           .then(returnedPerson => {
             setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
           })
-          .catch(error => {
-            setError(
-              `${person.name} has already been removed!`
-            )
+          .catch(err => {
+            console.log(err.response.data)
+            setError(`Error encountered: ${err.response.data.error}`)
             setTimeout(() => {
               setError(null)
             }, 5000)
-            console.log(`Person was already removed from server`, error)
-            setPersons(persons.filter(p => p.id !== id))
+            personService
+              .getAll()
+              .then(persons => setPersons(persons))
           })
       } else {
         window.alert(`${newName} is already in the phone book!`)
@@ -69,10 +69,10 @@ const App = () => {
       })
       .catch(err => {
         setError(`Error encountered: ${err.response.data.error}`)
+        setTimeout(() => {
+          setError(null)
+        }, 5000)
       })
-      setTimeout(() => {
-        setError(null)
-      }, 5000)
   }
 
   const handleNameChange = (event) => {
