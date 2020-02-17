@@ -17,9 +17,11 @@ const App = () => {
   const blogFormRef = React.createRef()
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs)
-    )
+    blogService.getAll()
+      .then(blogs => {
+        blogs.sort((a, b) => b.likes - a.likes)
+        setBlogs(blogs)
+      })
   }, [changes])
 
   useEffect(() => {
@@ -120,8 +122,8 @@ const App = () => {
         <div>
           <p>Welcome {user.name}!</p>
           <button onClick={logout}>Logout</button>
-          <br/>
-          <br/>
+          <br />
+          <br />
           <Togglable buttonLabel="New blog" ref={blogFormRef}>
             <BlogForm createAction={handleNewBlog} />
           </Togglable>
