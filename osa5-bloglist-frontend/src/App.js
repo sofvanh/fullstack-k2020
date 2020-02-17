@@ -102,6 +102,26 @@ const App = () => {
     }
   }
 
+  const handleDelete = async (blog) => {
+    try {
+      await blogService.remove(blog.id)
+      setChanges(changes + 1)
+      setNotification(
+        `Blog deleted!`
+      )
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
+    } catch (exception) {
+      setNotification(
+        `Couldn't delete blog: ${exception.response.data.error}`
+      )
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
+    }
+  }
+
   const logout = () => {
     setUser(null)
     blogService.setToken("")
@@ -127,7 +147,11 @@ const App = () => {
           <Togglable buttonLabel="New blog" ref={blogFormRef}>
             <BlogForm createAction={handleNewBlog} />
           </Togglable>
-          <BlogList blogs={blogs} likeAction={handleLike} />
+          <BlogList
+            blogs={blogs}
+            likeAction={handleLike}
+            deleteAction={handleDelete}
+          />
         </div>
       }
     </div>
