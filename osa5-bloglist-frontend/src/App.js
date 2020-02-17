@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import './App.css'
@@ -9,9 +10,6 @@ import './App.css'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
   const [added, setAdded] = useState(0)
   const [notification, setNotification] = useState(null)
 
@@ -22,7 +20,7 @@ const App = () => {
   }, [added])
 
   useEffect(() => {
-    const loggedUserJSON =window.localStorage.getItem('loggedUser')
+    const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -49,20 +47,14 @@ const App = () => {
     }
   }
 
-  const handleNewBlog = async(event) => {
-    event.preventDefault()
+  const handleNewBlog = async (title, author, url) => {
     try {
       const blog = {
         author: author,
         title: title,
         url: url
       }
-
       await blogService.create(blog)
-
-      setAuthor('')
-      setTitle('')
-      setUrl('')
       setAdded(added + 1)
     } catch (exception) {
       setNotification(
@@ -86,33 +78,6 @@ const App = () => {
     }, 5000)
   }
 
-  const blogForm = () => (
-    <form onSubmit={handleNewBlog}>
-      <div>
-        title 
-        <input
-        type="text"
-        value={title}
-        onChange={({ target }) => setTitle(target.value)}/>
-      </div>
-      <div>
-        author 
-        <input
-        type="text"
-        value={author}
-        onChange={({ target }) => setAuthor(target.value)}/>
-      </div>
-      <div>
-        url 
-        <input
-        type="text"
-        value={url}
-        onChange={({ target }) => setUrl(target.value)}/>
-      </div>
-      <button type="submit">Add</button>
-    </form>
-  )
-
   const blogsList = () => (
     <div>
       <h2>Blogs</h2>
@@ -124,14 +89,14 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={notification}/>
+      <Notification message={notification} />
       {user === null ?
-        <LoginForm loginAction={handleLogin}/> :
+        <LoginForm loginAction={handleLogin} /> :
         <div>
           <p>Welcome {user.name}!</p>
           <button onClick={logout}>Logout</button>
           {blogsList()}
-          {blogForm()}
+          <BlogForm createAction={handleNewBlog} />
         </div>
       }
     </div>
