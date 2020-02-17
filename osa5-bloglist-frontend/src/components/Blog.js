@@ -11,7 +11,7 @@ const Blog = ({ blog }) => {
   }
 
   return (
-    <div>
+    <div className="blog">
       <p>
         <b>{blog.title}</b>, {blog.author}
         <div style={hideWhenExpanded}>

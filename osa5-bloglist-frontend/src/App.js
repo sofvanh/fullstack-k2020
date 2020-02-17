@@ -90,10 +90,12 @@ const App = () => {
         <div>
           <p>Welcome {user.name}!</p>
           <button onClick={logout}>Logout</button>
-          <BlogList blogs={blogs} />
+          <br/>
+          <br/>
           <Togglable buttonLabel="New blog" ref={blogFormRef}>
             <BlogForm createAction={handleNewBlog} />
           </Togglable>
+          <BlogList blogs={blogs} />
         </div>
       }
     </div>
