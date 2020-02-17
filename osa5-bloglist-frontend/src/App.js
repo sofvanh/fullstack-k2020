@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -12,6 +13,7 @@ const App = () => {
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
   const [added, setAdded] = useState(0)
+  const [notification, setNotification] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -41,7 +43,12 @@ const App = () => {
       setPassword('')
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
     } catch (exception) {
-      console.log(exception)
+      setNotification(
+        `Login failed: ${exception.response.data.error}`
+      )
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
     }
   }
 
@@ -61,7 +68,12 @@ const App = () => {
       setUrl('')
       setAdded(added + 1)
     } catch (exception) {
-      console.log(exception)
+      setNotification(
+        `Couldn't add blog: ${exception.response.data.error}`
+      )
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
     }
   }
 
@@ -69,6 +81,12 @@ const App = () => {
     setUser(null)
     blogService.setToken("")
     window.localStorage.removeItem('loggedUser')
+    setNotification(
+      `Logged out!`
+    )
+    setTimeout(() => {
+      setNotification(null)
+    }, 5000)
   }
 
   const loginForm = () => (
@@ -131,6 +149,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={notification}/>
       {user === null ?
         loginForm() :
         <div>
