@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import LoginForm from './components/LoginForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import './App.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
@@ -31,8 +30,7 @@ const App = () => {
     }
   }, [])
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
+  const handleLogin = async (username, password) => {
     try {
       const user = await loginService.login({
         username, password,
@@ -40,8 +38,6 @@ const App = () => {
 
       setUser(user)
       blogService.setToken(user.token)
-      setUsername('')
-      setPassword('')
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
     } catch (exception) {
       setNotification(
@@ -90,28 +86,6 @@ const App = () => {
     }, 5000)
   }
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)} />
-      </div>
-      <div>
-        password
-              <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)} />
-      </div>
-      <button type="submit">Login</button>
-    </form>
-  )
-
   const blogForm = () => (
     <form onSubmit={handleNewBlog}>
       <div>
@@ -152,7 +126,7 @@ const App = () => {
     <div>
       <Notification message={notification}/>
       {user === null ?
-        loginForm() :
+        <LoginForm loginAction={handleLogin}/> :
         <div>
           <p>Welcome {user.name}!</p>
           <button onClick={logout}>Logout</button>
