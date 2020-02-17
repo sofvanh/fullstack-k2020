@@ -65,7 +65,11 @@ const App = () => {
     <div>
       {user === null ?
         loginForm() :
-        blogsList()}
+        <div>
+          <p>Welcome {user.name}!</p>
+          {blogsList()}
+        </div>
+      }
     </div>
   )
 }
