@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog, likeAction, deleteAction }) => {
+const Blog = ({ blog, likeAction, deleteAction, isOwned }) => {
   const [expanded, setExpanded] = useState(false)
 
   const hideWhenExpanded = { display: expanded ? 'none' : '' }
@@ -9,6 +9,8 @@ const Blog = ({ blog, likeAction, deleteAction }) => {
   const toggleExpanded = () => {
     setExpanded(!expanded)
   }
+
+  const showDelete = { display: isOwned(blog) ? '' : 'none' }
 
   return (
     <div className="blog">
@@ -25,7 +27,9 @@ const Blog = ({ blog, likeAction, deleteAction }) => {
         <br />
         {blog.user.name}
         <br />
-        <button onClick={() => deleteAction(blog)}>delete</button>
+        <div style={showDelete}>
+          <button onClick={() => deleteAction(blog)}>delete</button>
+        </div>
       </div>
     </div>
   )

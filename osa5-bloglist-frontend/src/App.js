@@ -136,6 +136,10 @@ const App = () => {
     }, 5000)
   }
 
+  const isOwned = blog => {
+    return blog.user.username === user.username
+  }
+
   return (
     <div>
       <Notification message={notification} />
@@ -153,6 +157,7 @@ const App = () => {
             blogs={blogs}
             likeAction={handleLike}
             deleteAction={handleDelete}
+            isOwned={isOwned}
           />
         </div>
       }
