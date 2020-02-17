@@ -103,6 +103,8 @@ const App = () => {
   }
 
   const handleDelete = async (blog) => {
+    const confirmed = window.confirm(`Delete ${blog.title}?`)
+    if (!confirmed) return;
     try {
       await blogService.remove(blog.id)
       setChanges(changes + 1)
