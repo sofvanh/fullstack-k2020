@@ -11,7 +11,7 @@ import './App.css'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [added, setAdded] = useState(0)
+  const [changes, setChanges] = useState(0)
   const [notification, setNotification] = useState(null)
 
   const blogFormRef = React.createRef()
@@ -20,7 +20,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
     )
-  }, [added])
+  }, [changes])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -59,10 +59,40 @@ const App = () => {
         url: url
       }
       await blogService.create(blog)
-      setAdded(added + 1)
+      setChanges(changes + 1)
+      setNotification(
+        `Blog added!`
+      )
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
     } catch (exception) {
       setNotification(
         `Couldn't add blog: ${exception.response.data.error}`
+      )
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
+    }
+  }
+
+  const handleLike = async (blog) => {
+    try {
+      const newBlog = {
+        ...blog,
+        likes: blog.likes + 1
+      }
+      await blogService.put(blog.id, newBlog)
+      setChanges(changes + 1)
+      setNotification(
+        `Blog liked!`
+      )
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
+    } catch (exception) {
+      setNotification(
+        `Couldn't like blog: ${exception.response.data.error}`
       )
       setTimeout(() => {
         setNotification(null)
@@ -95,7 +125,7 @@ const App = () => {
           <Togglable buttonLabel="New blog" ref={blogFormRef}>
             <BlogForm createAction={handleNewBlog} />
           </Togglable>
-          <BlogList blogs={blogs} />
+          <BlogList blogs={blogs} likeAction={handleLike} />
         </div>
       }
     </div>
