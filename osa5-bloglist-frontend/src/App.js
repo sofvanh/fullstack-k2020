@@ -14,6 +14,8 @@ const App = () => {
   const [added, setAdded] = useState(0)
   const [notification, setNotification] = useState(null)
 
+  const blogFormRef = React.createRef()
+
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
@@ -49,6 +51,7 @@ const App = () => {
   }
 
   const handleNewBlog = async (title, author, url) => {
+    blogFormRef.current.toggleVisibility()
     try {
       const blog = {
         author: author,
@@ -88,7 +91,7 @@ const App = () => {
           <p>Welcome {user.name}!</p>
           <button onClick={logout}>Logout</button>
           <BlogList blogs={blogs} />
-          <Togglable buttonLabel="New blog">
+          <Togglable buttonLabel="New blog" ref={blogFormRef}>
             <BlogForm createAction={handleNewBlog} />
           </Togglable>
         </div>
