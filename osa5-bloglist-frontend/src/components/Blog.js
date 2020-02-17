@@ -3,7 +3,7 @@ import React from 'react'
 const Blog = ({ blog }) => {
   return (
     <p>
-      {blog.title}, {blog.author}
+      <b>{blog.title}</b>, {blog.author}
     </p>
   )
 }
