@@ -63,7 +63,7 @@ const App = () => {
       await blogService.create(blog)
       setChanges(changes + 1)
       setNotification(
-        `Blog added!`
+        'Blog added!'
       )
       setTimeout(() => {
         setNotification(null)
@@ -87,7 +87,7 @@ const App = () => {
       await blogService.put(blog.id, newBlog)
       setChanges(changes + 1)
       setNotification(
-        `Blog liked!`
+        'Blog liked!'
       )
       setTimeout(() => {
         setNotification(null)
@@ -104,12 +104,12 @@ const App = () => {
 
   const handleDelete = async (blog) => {
     const confirmed = window.confirm(`Delete ${blog.title}?`)
-    if (!confirmed) return;
+    if (!confirmed) return
     try {
       await blogService.remove(blog.id)
       setChanges(changes + 1)
       setNotification(
-        `Blog deleted!`
+        'Blog deleted!'
       )
       setTimeout(() => {
         setNotification(null)
@@ -126,10 +126,10 @@ const App = () => {
 
   const logout = () => {
     setUser(null)
-    blogService.setToken("")
+    blogService.setToken('')
     window.localStorage.removeItem('loggedUser')
     setNotification(
-      `Logged out!`
+      'Logged out!'
     )
     setTimeout(() => {
       setNotification(null)

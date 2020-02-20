@@ -15,7 +15,7 @@ const LoginForm = ({ loginAction }) => {
     <form onSubmit={onSubmit}>
       <div>
         Username:
-            <input
+        <input
           type="text"
           value={username}
           name="Username"
@@ -23,7 +23,7 @@ const LoginForm = ({ loginAction }) => {
       </div>
       <div>
         Password:
-                  <input
+        <input
           type="password"
           value={password}
           name="Password"
