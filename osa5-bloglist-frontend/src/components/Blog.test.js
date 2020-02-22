@@ -1,6 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import Blog from './Blog'
 
 const someUser = {
@@ -45,4 +45,20 @@ test('does not render url or likes by default', () => {
 
   expect(component.getByText('www.ot.com', notExactOptions)).not.toBeVisible()
   expect(component.getByText('Likes:', notExactOptions)).not.toBeVisible()
+})
+
+test('clicking view reveals url and likes', async () => {
+  const component = render(
+    <Blog
+      blog={someBlog}
+      likeAction={someAction}
+      deleteAction={someAction}
+      isOwned={someAction} />
+  )
+
+  const button = component.getByText('view')
+  fireEvent.click(button)
+
+  expect(component.getByText('www.ot.com', notExactOptions)).toBeVisible()
+  expect(component.getByText('Likes:', notExactOptions)).toBeVisible()
 })
