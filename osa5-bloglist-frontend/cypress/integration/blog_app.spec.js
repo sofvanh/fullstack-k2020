@@ -9,7 +9,7 @@ describe('Blog app', function () {
     cy.contains('Login')
   })
 
-  describe('Login', function () {
+  describe('login', function () {
     it('succeeds with correct credentials', function () {
       cy.get('#username').type('violet')
       cy.get('#password').type('salis')
@@ -24,6 +24,24 @@ describe('Blog app', function () {
       cy.get('#login-button').click()
 
       cy.contains('Login failed')
+    })
+  })
+
+  describe('when logged in', function () {
+    beforeEach(function () {
+      cy.login({ username: 'violet', password: 'salis' })
+    })
+
+    it('a blog can be created', function () {
+      cy.contains('New blog')
+        .click()
+
+      cy.get('#title').type('Best food ever')
+      cy.get('#author').type('VG')
+      cy.get('#url').type('www.not-vegan.com')
+      cy.contains('Add').click()
+
+      cy.contains('Blog added')
     })
   })
 })
