@@ -43,5 +43,21 @@ describe('Blog app', function () {
 
       cy.contains('Blog added')
     })
+
+    it('a blog can be liked', function () {
+      cy.contains('New blog')
+        .click()
+
+      cy.get('#title').type('Great blog')
+      cy.get('#author').type('Mary Maximus')
+      cy.get('#url').type('www.great-mary.com')
+      cy.contains('Add').click()
+
+      cy.contains('view')
+        .click()
+      cy.contains('like')
+        .click()
+      cy.contains('Likes: 1')
+    })
   })
 })
