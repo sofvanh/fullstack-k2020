@@ -59,5 +59,21 @@ describe('Blog app', function () {
         .click()
       cy.contains('Likes: 1')
     })
+
+    it('a blog can be deleted', function () {
+      cy.contains('New blog')
+        .click()
+
+      cy.get('#title').type('Great blog')
+      cy.get('#author').type('Mary Maximus')
+      cy.get('#url').type('www.great-mary.com')
+      cy.contains('Add').click()
+
+      cy.contains('view')
+        .click()
+      cy.contains('delete')
+        .click()
+      cy.contains('Blog deleted')
+    })
   })
 })
