@@ -76,7 +76,7 @@ describe('Blog app', function () {
       cy.contains('Blog deleted')
     })
 
-    it.only('blogs are sorted', function () {
+    it('blogs are sorted', function () {
       cy.contains('New blog')
         .click()
       cy.get('#title').type('Great blog')
