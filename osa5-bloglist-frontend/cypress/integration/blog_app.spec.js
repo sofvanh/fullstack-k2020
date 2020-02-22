@@ -75,5 +75,38 @@ describe('Blog app', function () {
         .click()
       cy.contains('Blog deleted')
     })
+
+    it.only('blogs are sorted', function () {
+      cy.contains('New blog')
+        .click()
+      cy.get('#title').type('Great blog')
+      cy.get('#author').type('Mary Maximus')
+      cy.get('#url').type('www.great-mary.com')
+      cy.contains('Add').click()
+
+      cy.contains('New blog')
+        .click()
+      cy.get('#title').type('Best food ever')
+      cy.get('#author').type('VG')
+      cy.get('#url').type('www.not-vegan.com')
+      cy.contains('Add').click()
+
+      cy.contains('VG')
+        .contains('view')
+        .click()
+
+      cy.get('.blog').then(blogs => {
+        cy.wrap(blogs[1])
+          .contains('like')
+          .click()
+      })
+
+      cy.visit('http://localhost:3000')
+
+      cy.get('.blog').then(blogs => {
+        cy.wrap(blogs[0])
+          .contains('VG')
+      })
+    })
   })
 })
