@@ -62,3 +62,21 @@ test('clicking view reveals url and likes', async () => {
   expect(component.getByText('www.ot.com', notExactOptions)).toBeVisible()
   expect(component.getByText('Likes:', notExactOptions)).toBeVisible()
 })
+
+test('clicking like works', async () => {
+  const mockHandler = jest.fn()
+
+  const component = render(
+    <Blog
+      blog={someBlog}
+      likeAction={mockHandler}
+      deleteAction={someAction}
+      isOwned={someAction} />
+  )
+
+  const likeButton = component.getByText('like')
+  fireEvent.click(likeButton)
+  fireEvent.click(likeButton)
+
+  expect(mockHandler.mock.calls.length).toBe(2)
+})
