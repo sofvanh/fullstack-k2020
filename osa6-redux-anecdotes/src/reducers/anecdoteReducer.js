@@ -3,12 +3,7 @@ import anecdoteService from '../services/anecdotes'
 const reducer = (state = [], action) => {
   switch (action.type) {
     case 'VOTE':
-      const anecdote = state.find(a => a.id === action.data.id)
-      const changedAnecdote = {
-        ...anecdote,
-        votes: anecdote.votes + 1
-      }
-      return state.map(a => a.id !== action.data.id ? a : changedAnecdote)
+      return state.map(a => a.id !== action.data.id ? a : action.data)
     case 'NEW_ANECDOTE':
       return [...state, action.data]
     case 'INIT_ANECDOTES':
@@ -18,10 +13,13 @@ const reducer = (state = [], action) => {
   }
 }
 
-export const voteAnecdote = (id) => {
-  return {
-    type: 'VOTE',
-    data: { id }
+export const voteAnecdote = (anecdote) => {
+  return async dispatch => {
+    const newAnecdote = await anecdoteService.vote(anecdote)
+    dispatch({
+      type: 'VOTE',
+      data: newAnecdote
+    })
   }
 }
 
