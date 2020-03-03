@@ -1,4 +1,8 @@
 import React, { useState } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch, Route, Link
+} from "react-router-dom"
 
 const Menu = () => {
   const padding = {
@@ -6,9 +10,9 @@ const Menu = () => {
   }
   return (
     <div>
-      <a href='#' style={padding}>anecdotes</a>
-      <a href='#' style={padding}>create new</a>
-      <a href='#' style={padding}>about</a>
+      <Link style={padding} to="/anecdotes">anecdotes</Link>
+      <Link style={padding} to="/new">create new</Link>
+      <Link style={padding} to="/">about</Link>
     </div>
   )
 }
@@ -74,7 +78,7 @@ const CreateNew = (props) => {
         </div>
         <div>
           url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+          <input name='info' value={info} onChange={(e) => setInfo(e.target.value)} />
         </div>
         <button>create</button>
       </form>
@@ -123,14 +127,24 @@ const App = () => {
   }
 
   return (
-    <div>
-      <h1>Software anecdotes</h1>
-      <Menu />
-      <AnecdoteList anecdotes={anecdotes} />
-      <About />
-      <CreateNew addNew={addNew} />
-      <Footer />
-    </div>
+    <Router>
+      <div>
+        <h1>Software anecdotes</h1>
+        <Menu />
+        <Switch>
+          <Route path="/anecdotes">
+            <AnecdoteList anecdotes={anecdotes} />
+          </Route>
+          <Route path="/new">
+            <CreateNew addNew={addNew} />
+          </Route>
+          <Route path="/">
+            <About />
+          </Route>
+        </Switch>
+        <Footer />
+      </div>
+    </Router>
   )
 }
 
