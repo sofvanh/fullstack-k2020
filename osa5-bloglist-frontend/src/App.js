@@ -10,7 +10,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import userService from './services/users'
 import './App.css'
-import styled from 'styled-components'
+import { Page, Navigation } from './styles/Style'
 
 import {
   BrowserRouter as Router,
@@ -18,17 +18,6 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-
-const Page = styled.div`
-  padding: 10px;
-  background: #f4dada;
-`
-
-const Navigation = styled.div`
-  padding: 3px;
-  background: #f6eec7;
-  margin: 5px;
-`
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
