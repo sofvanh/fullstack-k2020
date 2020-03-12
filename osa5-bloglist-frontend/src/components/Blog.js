@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { Button, BlogDiv } from '../styles/Style'
 
 const Blog = ({ blog, likeAction, deleteAction, isOwned }) => {
   const [expanded, setExpanded] = useState(false)
@@ -14,25 +15,25 @@ const Blog = ({ blog, likeAction, deleteAction, isOwned }) => {
   const showDelete = { display: isOwned(blog) ? '' : 'none' }
 
   return (
-    <div className="blog">
+    <BlogDiv>
       <b>{blog.title}</b>, {blog.author}
       <div style={hideWhenExpanded}>
-        <button onClick={toggleExpanded}>view</button>
+        <Button onClick={toggleExpanded}>view</Button>
       </div>
       <div style={showWhenExpanded}>
-        <button onClick={toggleExpanded}>hide</button>
+        <Button onClick={toggleExpanded}>hide</Button>
         <br />
         {blog.url}
         <br />
-        Likes: {blog.likes} <button onClick={() => likeAction(blog)}>like</button>
+        Likes: {blog.likes} <Button onClick={() => likeAction(blog)}>like</Button>
         <br />
         {blog.user.name}
         <br />
         <div style={showDelete}>
-          <button onClick={() => deleteAction(blog)}>delete</button>
+          <Button onClick={() => deleteAction(blog)}>delete</Button>
         </div>
       </div>
-    </div>
+    </BlogDiv>
   )
 }
 

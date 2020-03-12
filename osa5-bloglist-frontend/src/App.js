@@ -10,7 +10,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import userService from './services/users'
 import './App.css'
-import { Page, Navigation } from './styles/Style'
+import { Page, Navigation, Button } from './styles/Style'
 
 import {
   BrowserRouter as Router,
@@ -170,7 +170,7 @@ const App = () => {
           <Link style={padding} to="/">Home</Link>
           <Link style={padding} to="/users">Users</Link>
           {user
-            ? <span>{user.name} logged in <button onClick={logout}>Logout</button></span>
+            ? <span>{user.name} logged in <Button onClick={logout}>Logout</Button></span>
             : null}
         </Navigation>
         <Notification message={notification} />

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Button, Input } from '../styles/Style'
 
 const LoginForm = ({ loginAction }) => {
   const [username, setUsername] = useState('')
@@ -15,7 +16,7 @@ const LoginForm = ({ loginAction }) => {
     <form onSubmit={onSubmit}>
       <div>
         Username:
-        <input
+        <Input
           id='username'
           type="text"
           value={username}
@@ -24,14 +25,14 @@ const LoginForm = ({ loginAction }) => {
       </div>
       <div>
         Password:
-        <input
+        <Input
           id='password'
           type="password"
           value={password}
           name="Password"
           onChange={({ target }) => setPassword(target.value)} />
       </div>
-      <button id='login-button' type="submit">Login</button>
+      <Button id='login-button' type="submit">Login</Button>
     </form>
   )
 }

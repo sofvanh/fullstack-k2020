@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Button, Input } from '../styles/Style'
 
 const BlogForm = ({ createAction }) => {
   const [title, setTitle] = useState('')
@@ -17,7 +18,7 @@ const BlogForm = ({ createAction }) => {
     <form onSubmit={onSubmit}>
       <div>
         Title:
-        <input
+        <Input
           id='title'
           type="text"
           value={title}
@@ -25,7 +26,7 @@ const BlogForm = ({ createAction }) => {
       </div>
       <div>
         Author:
-        <input
+        <Input
           id='author'
           type="text"
           value={author}
@@ -33,13 +34,13 @@ const BlogForm = ({ createAction }) => {
       </div>
       <div>
         Url:
-        <input
+        <Input
           id='url'
           type="text"
           value={url}
           onChange={({ target }) => setUrl(target.value)} />
       </div>
-      <button type="submit">Add</button>
+      <Button type="submit">Add</Button>
     </form>
   )
 }

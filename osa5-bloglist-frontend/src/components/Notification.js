@@ -1,4 +1,5 @@
 import React from 'react'
+import { Notice } from '../styles/Style'
 
 const Notification = ({ message }) => {
   if (message === null) {
@@ -6,9 +7,9 @@ const Notification = ({ message }) => {
   }
 
   return (
-    <div className="notification">
+    <Notice>
       {message}
-    </div>
+    </Notice>
   )
 }
 
