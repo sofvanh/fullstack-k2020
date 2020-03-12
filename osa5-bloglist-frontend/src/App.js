@@ -4,6 +4,7 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import BlogList from './components/BlogList'
 import UserList from './components/UserList'
+import UserPage from './components/UserPage'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -176,6 +177,9 @@ const App = () => {
         </div>
         <Notification message={notification} />
         <Switch>
+          <Route path="/users/:id">
+            <UserPage users={users}/>
+          </Route>
           <Route path="/users">
             <UserList users={users}/>
           </Route>

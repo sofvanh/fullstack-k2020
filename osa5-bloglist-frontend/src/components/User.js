@@ -1,10 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const User = ({ user }) => {
-  console.log(user)
   return (
     <div>
-      {user.name}, blogs: {user.blogs.length}
+      <Link to={`/users/${user.id}`}>{user.name}</Link>
+      , blogs: {user.blogs.length}
     </div>
   )
 }
