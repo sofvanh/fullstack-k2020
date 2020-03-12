@@ -7,6 +7,7 @@ import UserList from './components/UserList'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import userService from './services/users'
 import './App.css'
 
 import {
@@ -21,6 +22,7 @@ import {
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [users, setUsers] = useState([])
   const [user, setUser] = useState(null)
   const [changes, setChanges] = useState(0)
   const [notification, setNotification] = useState(null)
@@ -34,6 +36,13 @@ const App = () => {
         setBlogs(blogs)
       })
   }, [changes])
+
+  useEffect(() => {
+    userService.getAll()
+      .then(users => {
+        setUsers(users)
+      })
+  }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -168,7 +177,7 @@ const App = () => {
         <Notification message={notification} />
         <Switch>
           <Route path="/users">
-            <UserList />
+            <UserList users={users}/>
           </Route>
           <Route path="/">
             {user === null ?
