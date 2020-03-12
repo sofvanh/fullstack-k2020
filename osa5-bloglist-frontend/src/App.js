@@ -10,16 +10,25 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import userService from './services/users'
 import './App.css'
+import styled from 'styled-components'
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  Redirect,
-  useParams,
-  useHistory
+  Link
 } from 'react-router-dom'
+
+const Page = styled.div`
+  padding: 10px;
+  background: #f4dada;
+`
+
+const Navigation = styled.div`
+  padding: 3px;
+  background: #f6eec7;
+  margin: 5px;
+`
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -166,22 +175,22 @@ const App = () => {
   }
 
   return (
-    <div>
+    <Page>
       <Router>
-        <div className="navbar">
+        <Navigation>
           <Link style={padding} to="/">Home</Link>
           <Link style={padding} to="/users">Users</Link>
           {user
             ? <span>{user.name} logged in <button onClick={logout}>Logout</button></span>
             : null}
-        </div>
+        </Navigation>
         <Notification message={notification} />
         <Switch>
           <Route path="/users/:id">
-            <UserPage users={users}/>
+            <UserPage users={users} />
           </Route>
           <Route path="/users">
-            <UserList users={users}/>
+            <UserList users={users} />
           </Route>
           <Route path="/">
             {user === null ?
@@ -201,7 +210,7 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
-    </div>
+    </Page>
   )
 }
 
