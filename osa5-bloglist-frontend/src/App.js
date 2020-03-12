@@ -3,10 +3,21 @@ import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import BlogList from './components/BlogList'
+import UserList from './components/UserList'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import './App.css'
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useParams,
+  useHistory
+} from 'react-router-dom'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -140,27 +151,43 @@ const App = () => {
     return blog.user.username === user.username
   }
 
+  const padding = {
+    padding: 5
+  }
+
   return (
     <div>
-      <Notification message={notification} />
-      {user === null ?
-        <LoginForm loginAction={handleLogin} /> :
-        <div>
-          <p>Welcome {user.name}!</p>
-          <button onClick={logout}>Logout</button>
-          <br />
-          <br />
-          <Togglable buttonLabel="New blog" ref={blogFormRef}>
-            <BlogForm createAction={handleNewBlog} />
-          </Togglable>
-          <BlogList
-            blogs={blogs}
-            likeAction={handleLike}
-            deleteAction={handleDelete}
-            isOwned={isOwned}
-          />
+      <Router>
+        <div className="navbar">
+          <Link style={padding} to="/">Home</Link>
+          <Link style={padding} to="/users">Users</Link>
+          {user
+            ? <span>{user.name} logged in <button onClick={logout}>Logout</button></span>
+            : null}
         </div>
-      }
+        <Notification message={notification} />
+        <Switch>
+          <Route path="/users">
+            <UserList />
+          </Route>
+          <Route path="/">
+            {user === null ?
+              <LoginForm loginAction={handleLogin} /> :
+              <div>
+                <Togglable buttonLabel="New blog" ref={blogFormRef}>
+                  <BlogForm createAction={handleNewBlog} />
+                </Togglable>
+                <BlogList
+                  blogs={blogs}
+                  likeAction={handleLike}
+                  deleteAction={handleDelete}
+                  isOwned={isOwned}
+                />
+              </div>
+            }
+          </Route>
+        </Switch>
+      </Router>
     </div>
   )
 }
